@@ -5,7 +5,7 @@ var game = {};
 var endtext = {};
 var moves = {};
 
-function runGame(pgn,end,label,startply) {
+function runGame(pgn,end,label,startply,caption) {
   ply[label] = startply;
   endtext[label] = end;
   var counter = 0;
@@ -34,7 +34,8 @@ function runGame(pgn,end,label,startply) {
   setGameMoveText(label);
 
   // Set text below game 
-  document.getElementById(label +  "-text").innerHTML = pgn;
+  if(caption == 0) { caption = pgn; }
+  document.getElementById(label +  "-text").innerHTML = caption;
   
 }
 
