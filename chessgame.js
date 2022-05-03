@@ -1,33 +1,39 @@
 /* Donated to the public domain 2022 by Sam Trenholme */
-var ply;
-var board;
-var game = new Chess();
-var endtext = "Game over";
-var moves;
+var ply = {};
+var board = {};
+var game = {};
+var endtext = {};
+var moves = {};
 
-function runGame(pgn,end,label) {
- board = ChessBoard(label, {
-    // Make this the path to the pieces, e.g.
-    // pieceTheme: '/blog/chess/{piece}.png',
-    pieceTheme: '{piece}.png',
-    position: 'start'
-  });
-  document.getElementById(label + "-move").innerHTML = "Game start";
-  ply = 0;
-  endtext = end;
+function runGame(pgn,end,label,startply) {
+  ply[label] = startply;
+  endtext[label] = end;
   var counter = 0;
 
   // 1. Load a PGN into the game
-  
-  game.load_pgn(pgn);
-  var localhistory = game.history();
-  moves = new Array();
+  game[label] = new Chess(); 
+  game[label].load_pgn(pgn);
+  var localhistory = game[label].history();
+  moves[label] = new Array();
   for(counter = 0; counter < localhistory.length; counter++) { 
-    moves[counter] = localhistory[counter];
+    moves[label][counter] = localhistory[counter];
   }
+  game[label].reset();
+  if(startply > 0) {
+    for(counter = 0; counter < startply; counter++) {
+      game[label].move(moves[label][counter]);
+    }
+  }
+  console.log(game[label].fen());//DEBUG
+  board[label] = ChessBoard(label, {
+    // Make this the path to the pieces, e.g.
+    // pieceTheme: '/blog/chess/{piece}.png',
+    pieceTheme: '{piece}.png',
+    position: game[label].fen() 
+  });
+  setGameMoveText(label);
 
-  // Display the pgn string below the board
- 
+  // Set text below game 
   document.getElementById(label +  "-text").innerHTML = pgn;
   
 }
@@ -40,38 +46,43 @@ function runGame(pgn,end,label) {
 function chessMove(label,action) {
     var counter = 0;
     if(action == -3) {
-      ply += 1;
+      ply[label] += 1;
     } else if(action == -1) {
-      ply = 0;
+      ply[label] = 0;
     } else if(action == -2) {
-      ply -= 1;
+      ply[label] -= 1;
     } else if(action == -4) {
-      ply = moves.length;
+      ply[label] = moves[label].length;
     } else if(action >= 0) {
-      ply = action;
+      ply[label] = action;
     }
     
-    if (ply > moves.length) {
-      ply = moves.length;
-    } else if(ply < 0) {
-      ply = 0;
+    if (ply[label] > moves[label].length) {
+      ply[label] = moves[label].length;
+    } else if(ply[label] < 0) {
+      ply[label] = 0;
     }
-    if(ply % 2 == 0) {
+    game[label].reset();
+    for(counter = 0; counter < ply[label]; counter++) { 
+      game[label].move(moves[label][counter]);
+    }
+    board[label].position(game[label].fen());
+    setGameMoveText(label);
+}
+
+function setGameMoveText(label) {
+    var color = "";
+    if(ply[label] % 2 == 0) {
       color = " (Black moved)";
     } else {
       color = " (White moved)";
     }
-    game.reset();
-    for(coutner = 0; counter < ply; counter++) { 
-      game.move(moves[counter]);
-    }
-    board.position(game.fen());
-    if(ply == moves.length) {
-      document.getElementById(label + "-move").innerHTML = endtext;
-    } else if(ply == 0) {
+    if(ply[label] >= moves[label].length) {
+      document.getElementById(label + "-move").innerHTML = endtext[label];
+    } else if(ply[label] == 0) {
       document.getElementById(label + "-move").innerHTML = "Game start";
     } else {
       document.getElementById(label + "-move").innerHTML = "Move " +
-         Math.floor((ply+1)/2) + color;
+         Math.floor((ply[label]+1)/2) + color;
     } 
-}
+} 
