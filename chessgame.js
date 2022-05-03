@@ -7,7 +7,9 @@ var moves;
 
 function runGame(pgn,end,label) {
  board = ChessBoard(label, {
-    pieceTheme: '/blog/chess/{piece}.png',
+    // Make this the path to the pieces, e.g.
+    // pieceTheme: '/blog/chess/{piece}.png',
+    pieceTheme: '{piece}.png',
     position: 'start'
   });
   document.getElementById(label + "-move").innerHTML = "Game start";
