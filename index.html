@@ -8,21 +8,13 @@ Hello world, let me show you a chess game I played in 1994:
 <p>
 
 <!-- Here is everything needed to add a chess game to a blog -->
-<div class="chessboard" id="board1" style="margin: 0 auto; width: 355px;"></div>
-<div style="margin: 5px auto; width: 355px;">
-<input type="button" onclick="chessMove('board1',-1)" value="<<" />
-<input type="button" onclick="chessMove('board1',-2)" value="<" />
-<input type="button" onclick="chessMove('board1',-3)" value=">" />
-<input type="button" onclick="chessMove('board1',-4)" value=">>" />
-<span id="board1-move"></span>
-<p><span id="board1-text"></span></p>
-</div>
 <script src="jquery-3.4.1.min.js"></script>
 <script src="chessboard-0.3.0.min.js"
   type="text/javascript"></script>
 <script src="chess.js"></script>
 <link href="chessboard-0.3.0.min.css" rel="stylesheet"></link>
 <script src="chessgame.js"></script>
+<div id="board1-box"></div>
 <script type="text/javascript">
 runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
     + " 7. Qxg6+ Ke7 8. Qxe4 Kd6 9. Qd4 Kc6 10. Qc4 Kb6 11. Qb5# 1-0 ",
@@ -33,6 +25,7 @@ runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
 7. Qxg6+ Ke7 8. Qxe4 Kd6 9. Qd4 Kc6 10. Qc4 Kb6 11. Qb5# 1-0
 {White checkmates Black}
 </noscript>
+<!-- End interactive Chess diagram -->
 
 <p>
 

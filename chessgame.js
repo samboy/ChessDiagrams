@@ -6,16 +6,23 @@ var endtext = {};
 var moves = {};
 // Default PGN is Kasparov-Topalov January 1999
 var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
-" 7. Nge2 Nbd7 8. Bh6 Bxh6 9. Qxh6 Bb7 10. a3 e5 11. O-O-O Qe7 "+
-"12. Kb1 a6 13. Nc1 O-O-O 14. Nb3 exd4 15. Rxd4 c5 16. Rd1 Nb6 " +
-"17. g3 Kb8 18. Na5 Ba8 19. Bh3 d5 20. Qf4+ Ka7 21. Rhe1 d4 " +
-"22. Nd5 Nbxd5 23. exd5 Qd6 24. Rxd4 cxd4 25. Re7+ Kb6 " +
-"26. Qxd4+ Kxa5 27. b4+ Ka4 28. Qc3 Qxd5 29. Ra7 Bb7 30. Rxb7 " +
-"Qc4 31. Qxf6 Kxa3 32. Qxa6+ Kxb4 33. c3+ Kxc3 34. Qa1+ Kd2 " +
-"35. Qb2+ Kd1 36. Bf1 Rd2 37. Rd7 Rxd7 38. Bxc4 bxc4 39. Qxh8 " +
-"Rd3 40. Qa8 c3 41. Qa4+ Ke1 42. f4 f5 43. Kc1 Rd2 44. Qa7 1-0";
+    " 7. Nge2 Nbd7 8. Bh6 Bxh6 9. Qxh6 Bb7 10. a3 e5 11. O-O-O Qe7 "+
+    "12. Kb1 a6 13. Nc1 O-O-O 14. Nb3 exd4 15. Rxd4 c5 16. Rd1 Nb6 " +
+    "17. g3 Kb8 18. Na5 Ba8 19. Bh3 d5 20. Qf4+ Ka7 21. Rhe1 d4 " +
+    "22. Nd5 Nbxd5 23. exd5 Qd6 24. Rxd4 cxd4 25. Re7+ Kb6 " +
+    "26. Qxd4+ Kxa5 27. b4+ Ka4 28. Qc3 Qxd5 29. Ra7 Bb7 30. Rxb7 " +
+    "Qc4 31. Qxf6 Kxa3 32. Qxa6+ Kxb4 33. c3+ Kxc3 34. Qa1+ Kd2 " +
+    "35. Qb2+ Kd1 36. Bf1 Rd2 37. Rd7 Rxd7 38. Bxc4 bxc4 39. Qxh8 " +
+    "Rd3 40. Qa8 c3 41. Qa4+ Ke1 42. f4 f5 43. Kc1 Rd2 44. Qa7 1-0";
 
 function runGame(pgn,end,label,startply,caption) {
+  if(startply == 0) {
+    document.getElementById(label +  "-box").innerHTML = 
+        HTMLstringForGame(label,385);
+  } else {
+    document.getElementById(label +  "-box").innerHTML = 
+        HTMLstringForPostition(label,385,startply);
+  }
   ply[label] = startply;
   endtext[label] = end;
   var counter = 0;
@@ -89,12 +96,13 @@ function chessMove(label,action) {
     setGameMoveText(label);
 }
 
+// Set the text for the game move next to the buttons
 function setGameMoveText(label) {
     var color = "";
     if(ply[label] % 2 == 0) {
-      color = " (Black moved)";
+      color = " (White’s move)";
     } else {
-      color = " (White moved)";
+      color = " (Black’s move)";
     }
     if(ply[label] >= moves[label].length) {
       document.getElementById(label + "-move").innerHTML = endtext[label];
@@ -105,3 +113,43 @@ function setGameMoveText(label) {
          Math.floor((ply[label]+1)/2) + color;
     } 
 } 
+
+// Create the HTML for holding the chess diagram (entire game)
+function HTMLstringForGame(label,width) {
+  var out = '';
+  out += '<div class="chessboard" id="' + label + 
+             '" style="margin: 0 auto; width: ' + width + 'px;"></div> ';
+  out += '<div style="margin: 5px auto; width: ' + width + 'px;"> ';
+  out += '<input type="button" onclick="chessMove('
+      + "'" + label + "'" + ',-1)" value="<<" /> ';
+  out += '<input type="button" onclick="chessMove('
+      + "'" + label + "'" + ',-2)" value="<" /> ';
+  out += '<input type="button" onclick="chessMove('
+      + "'" + label + "'" + ',-3)" value=">" style="width: 65px;" /> ';
+  out += '<input type="button" onclick="chessMove(' + 
+         "'" + label + "'" + ',-4)" value=">>" /> ';
+  out += '<span id="' + label + '-move"></span> ';
+  out += '<p><span id="' + label + '-text"></span></p>';
+  out += '</div>'
+  return out;
+}
+
+// Create the HTML for holding the chess diagram (game position after
+// start of game)
+function HTMLstringForPostition(label,width,ply) {
+  var out = '';
+  out += '<div class="chessboard" id="' + label + 
+             '" style="margin: 0 auto; width: ' + width + 'px;"></div> ';
+  out += '<div style="margin: 5px auto; width: ' + width + 'px;"> ';
+  out += '<input type="button" onclick="chessMove('
+      + "'" + label + "'" + ',' + ply + ')" value=" Reset " /> ';
+  out += '<input type="button" onclick="chessMove('
+      + "'" + label + "'" + ',-2)" value="<" /> ';
+  out += '<input type="button" onclick="chessMove('
+      + "'" + label + "'" + ',-3)" value=">" /> ';
+  out += '<span id="' + label + '-move"></span> ';
+  out += '<p><span id="' + label + '-text"></span></p>';
+  out += '</div>'
+  return out;
+}
+
