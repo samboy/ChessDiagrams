@@ -102,9 +102,9 @@ function chessMove(label,action) {
 function setGameMoveText(label) {
     var color = "";
     if(ply[label] % 2 == 0) {
-      color = " (White moved)";
-    } else {
       color = " (Black moved)";
+    } else {
+      color = " (White moved)";
     }
     if(ply[label] >= moves[label].length) {
       document.getElementById(label + "-move").innerHTML = endtext[label];
