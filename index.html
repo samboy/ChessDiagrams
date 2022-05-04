@@ -14,11 +14,25 @@ Hello world, let me show you a chess game I played in 1994:
 <script src="chess.js"></script>
 <link href="chessboard-0.3.0.min.css" rel="stylesheet"></link>
 <script src="chessgame.js"></script>
-<div id="board1-box"></div>
+<!-- Please note that the first diagram going over the game needs
+  -- to have the name "gameScore" -->
+<div id="gameScore-box"></div>
+<!-- Here, runGame draws the interactive diagram.  It takes the following
+  -- arguments: 
+  -- 1) The PGN of the game we want to go over
+  -- 2) The string describing the end of the game
+  -- 3) The ID of the game.  Note that we need a <div id="ID-box"></div>,
+  --    where ID is this third argument
+  -- 4) The ply number we are looking at in the diagram.  This allows us to
+  --    make a diagram of a position in the game.  0 is game start, 1 is
+  --    after White’s first move, 2 is after Black’s first move, etc.
+  -- 5) The text to put below the diagram.  If this has the value 0, we
+  --    put in the PGN of the game score.
+  -->
 <script type="text/javascript">
 runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
     + " 7. Qxg6+ Ke7 8. Qxe4 Kd6 9. Qd4 Kc6 10. Qc4 Kb6 11. Qb5# 1-0 ",
-    "White checkmates Black","board1",0,0);
+    "White checkmates Black","gameScore",0,0);
 </script>
 <noscript>
 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6
@@ -27,11 +41,31 @@ runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
 </noscript>
 <!-- End interactive Chess diagram -->
 
-<p>
+<h2>Analysis</h2>
 
-As my chess mentor put it, after 3... Nxe4?!, you have made one mistake.
-Don’t make another mistake...and 4... f6? was the second and decisive
-mistake.
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4?!
+
+<p>
+<!-- BEGIN -->
+<div id="board1-box"></div>
+<!-- Another thing about runGame.  If the PGN string is instead the number
+  -- 0, this tells runGame to use the score from the diagram with the
+  -- ID (label) "gameScore".  This allows different positions from the same
+  -- game to be looked at without needing to copy the score multiple times.
+  -- Note that if gameScore is given 0 as its PGN value, or if another
+  -- diagram uses 0 for the PGN without gameScore being set, the game 
+  -- shown will be Kasparov - Topalov Wijk aan Zee 1999 
+  -- Also note: If ply (the fourth argument) isn’t 0, we change the
+  -- buttons to be "reset" (go back to the position initally shown), 
+  -- "backward", and "forward" instead of 
+  -- "start", "backward", "forward", "end" -->
+<script type="text/javascript">
+runGame(0,"White checkmates Black","board1",6,"Position after 3... Nxe4?!");
+</script>
+<noscript>
+Position after 3... Nxe4?!
+</noscript>
+<!-- END -->
 
 <h1>Attribution</h1>
 
