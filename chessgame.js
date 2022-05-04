@@ -18,10 +18,10 @@ var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
 function runGame(pgn,end,label,startply,caption) {
   if(startply == 0) {
     document.getElementById(label +  "-box").innerHTML = 
-        HTMLstringForGame(label,385);
+        HTMLstringForGame(label,398);
   } else {
     document.getElementById(label +  "-box").innerHTML = 
-        HTMLstringForPostition(label,385,startply);
+        HTMLstringForPostition(label,398,startply);
   }
   ply[label] = startply;
   endtext[label] = end;
@@ -110,7 +110,7 @@ function setGameMoveText(label) {
       document.getElementById(label + "-move").innerHTML = "Game start";
     } else {
       document.getElementById(label + "-move").innerHTML = "Move " +
-         Math.floor((ply[label]+1)/2) + color;
+         Math.floor((ply[label]+2)/2) + color;
     } 
 } 
 
@@ -125,7 +125,7 @@ function HTMLstringForGame(label,width) {
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-2)" value="<" /> ';
   out += '<input type="button" onclick="chessMove('
-      + "'" + label + "'" + ',-3)" value=">" style="width: 65px;" /> ';
+      + "'" + label + "'" + ',-3)" value=">" style="width: 61px;" /> ';
   out += '<input type="button" onclick="chessMove(' + 
          "'" + label + "'" + ',-4)" value=">>" /> ';
   out += '<span id="' + label + '-move"></span> ';
