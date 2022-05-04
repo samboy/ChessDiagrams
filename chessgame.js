@@ -1,4 +1,6 @@
 /* Donated to the public domain 2022 by Sam Trenholme */
+/* Please edit pieceTheme to point to location of pieces if the files
+ * are moved */
 var ply = {};
 var board = {};
 var game = {};
@@ -100,9 +102,9 @@ function chessMove(label,action) {
 function setGameMoveText(label) {
     var color = "";
     if(ply[label] % 2 == 0) {
-      color = " (White’s move)";
+      color = " (White moved)";
     } else {
-      color = " (Black’s move)";
+      color = " (Black moved)";
     }
     if(ply[label] >= moves[label].length) {
       document.getElementById(label + "-move").innerHTML = endtext[label];
@@ -110,7 +112,7 @@ function setGameMoveText(label) {
       document.getElementById(label + "-move").innerHTML = "Game start";
     } else {
       document.getElementById(label + "-move").innerHTML = "Move " +
-         Math.floor((ply[label]+2)/2) + color;
+         Math.floor((ply[label]+1)/2) + color;
     } 
 } 
 
