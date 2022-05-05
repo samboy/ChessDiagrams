@@ -160,9 +160,9 @@ function HTMLstringForPostition(label,width,ply) {
              '" style="margin: 0 auto; width: ' + width + 'px;"></div> ';
   out += '<div style="margin: 5px auto; width: ' + width + 'px;"> ';
   out += '<input type="button" onclick="chessMove('
-      + "'" + label + "'" + ',' + ply + ')" value=" Reset " /> ';
-  out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-6)" value="<" /> ';
+  out += '<input type="button" onclick="chessMove('
+      + "'" + label + "'" + ',' + ply + ')" value=" Reset " /> ';
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-5)" value=">" /> ';
   out += '<span id="' + label + '-move"></span> ';
