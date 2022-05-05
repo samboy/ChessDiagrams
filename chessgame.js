@@ -88,10 +88,16 @@ function chessMove(label,action) {
       ply[label] = moves[label].length;
     } else if(action >= 0) {
       ply[label] = action;
-      document.getElementById(label +  "-text").innerHTML = note[label];
     }
 
-    if(action == -5 || action == -6) {
+    if (ply[label] > moves[label].length) {
+      ply[label] = moves[label].length;
+    } else if(ply[label] < 0) {
+      ply[label] = 0;
+    }
+
+    // Note if a mid-game position has been changed by pushing the buttons
+    if(action == -5 || action == -6 || action > 0) {
       if(ply[label] != defaultply[label]) {
           document.getElementById(label +  "-text").innerHTML = 
               "Position modified, hit “Reset” to restore";
@@ -100,11 +106,6 @@ function chessMove(label,action) {
       }
     }
     
-    if (ply[label] > moves[label].length) {
-      ply[label] = moves[label].length;
-    } else if(ply[label] < 0) {
-      ply[label] = 0;
-    }
     game[label].reset();
     for(counter = 0; counter < ply[label]; counter++) { 
       game[label].move(moves[label][counter]);
