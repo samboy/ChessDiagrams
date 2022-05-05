@@ -1,11 +1,12 @@
 /* Donated to the public domain 2022 by Sam Trenholme */
-/* Please edit pieceTheme to point to location of pieces if the files
- * are moved */
+// NOTE NOTE NOTE: If the piece graphics are moved, change pieceTheme below
 var ply = {};
 var board = {};
 var game = {};
 var endtext = {};
 var moves = {};
+var note = {};
+var defaultply = {};
 // Default PGN is Kasparov-Topalov January 1999
 var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
     " 7. Nge2 Nbd7 8. Bh6 Bxh6 9. Qxh6 Bb7 10. a3 e5 11. O-O-O Qe7 "+
@@ -26,6 +27,7 @@ function runGame(pgn,end,label,startply,caption) {
         HTMLstringForPostition(label,398,startply);
   }
   ply[label] = startply;
+  defaultply[label] = startply;
   endtext[label] = end;
   var counter = 0;
 
@@ -62,6 +64,7 @@ function runGame(pgn,end,label,startply,caption) {
 
   // Set text below game 
   if(caption == 0) { caption = pgn; }
+  note[label] = caption;
   document.getElementById(label +  "-text").innerHTML = caption;
   
 }
@@ -69,20 +72,32 @@ function runGame(pgn,end,label,startply,caption) {
 // Input:
 // label: ID of this Chess game
 // action: What to do.  -1: Top -2: Last move -3: Next move -4: End
+//         -5: Next move, note game is modified
+//         -6: Last move, note game is modified
 // Positive number: Go to that ply number (initial position is ply 0,
 // move 1 is ply 1 2, move 2 ply 3 4, etc.)
 function chessMove(label,action) {
     var counter = 0;
-    if(action == -3) {
+    if(action == -3 || action == -5) {
       ply[label] += 1;
     } else if(action == -1) {
       ply[label] = 0;
-    } else if(action == -2) {
+    } else if(action == -2 || action == -6) {
       ply[label] -= 1;
     } else if(action == -4) {
       ply[label] = moves[label].length;
     } else if(action >= 0) {
       ply[label] = action;
+      document.getElementById(label +  "-text").innerHTML = note[label];
+    }
+
+    if(action == -5 || action == -6) {
+      if(ply[label] != defaultply[label]) {
+          document.getElementById(label +  "-text").innerHTML = 
+              "Position modified, hit “Reset” to restore";
+      } else {
+          document.getElementById(label +  "-text").innerHTML = note[label];
+      }
     }
     
     if (ply[label] > moves[label].length) {
@@ -146,9 +161,9 @@ function HTMLstringForPostition(label,width,ply) {
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',' + ply + ')" value=" Reset " /> ';
   out += '<input type="button" onclick="chessMove('
-      + "'" + label + "'" + ',-2)" value="<" /> ';
+      + "'" + label + "'" + ',-6)" value="<" /> ';
   out += '<input type="button" onclick="chessMove('
-      + "'" + label + "'" + ',-3)" value=">" /> ';
+      + "'" + label + "'" + ',-5)" value=">" /> ';
   out += '<span id="' + label + '-move"></span> ';
   out += '<p><span id="' + label + '-text"></span></p>';
   out += '</div>'
