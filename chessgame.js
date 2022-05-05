@@ -1,5 +1,7 @@
 /* Donated to the public domain 2022 by Sam Trenholme */
 // NOTE NOTE NOTE: If the piece graphics are moved, change pieceTheme below
+
+// All of these are objects because we have multiple board support
 var ply = {};
 var board = {};
 var game = {};
@@ -7,6 +9,8 @@ var endtext = {};
 var moves = {};
 var note = {};
 var defaultply = {};
+var fen = {}
+
 // Default PGN is Kasparov-Topalov January 1999
 var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
     " 7. Nge2 Nbd7 8. Bh6 Bxh6 9. Qxh6 Bb7 10. a3 e5 11. O-O-O Qe7 "+
@@ -49,16 +53,19 @@ function runGame(pgn,end,label,startply,caption) {
     moves[label][counter] = localhistory[counter];
   }
   game[label].reset();
-  if(startply > 0) {
-    for(counter = 0; counter < startply; counter++) {
-      game[label].move(moves[label][counter]);
-    }
+
+  // Pre-cache the FEN for each position in the game
+  fen[label] = new Array()
+  for(counter = 0; counter <= moves[label].length; counter++) {
+    fen[label][counter] = game[label].fen();
+    game[label].move(moves[label][counter]);
   }
+ 
   board[label] = ChessBoard(label, {
     // Make this the path to the pieces, e.g.
     // pieceTheme: '/blog/chess/{piece}.png',
     pieceTheme: '{piece}.png',
-    position: game[label].fen() 
+    position: fen[label][ply[label]]
   });
   setGameMoveText(label);
 
@@ -106,11 +113,7 @@ function chessMove(label,action) {
       }
     }
     
-    game[label].reset();
-    for(counter = 0; counter < ply[label]; counter++) { 
-      game[label].move(moves[label][counter]);
-    }
-    board[label].position(game[label].fen());
+    board[label].position(fen[label][ply[label]]);
     setGameMoveText(label);
 }
 
