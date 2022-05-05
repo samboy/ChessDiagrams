@@ -34,6 +34,7 @@ function runGame(pgn,end,label,startply,caption) {
   defaultply[label] = startply;
   endtext[label] = end;
   var counter = 0;
+  var useDefault = 0;
 
   // Since we may use the same PGN multiple times when annotating a
   // game, let’s allow pgn to be a copy of "gameScore".  This way,
@@ -41,8 +42,8 @@ function runGame(pgn,end,label,startply,caption) {
   // that this doesn’t make showing analysis positions which didn’t occur
   // in the game easier, but, IMHO, diagrams should usually be of 
   // positions which actually were on the board in the game.
-  if(pgn == 0) { pgn = pgnDefault; }
-  if(label == "gameScore") { pgnDefault = pgn; }
+  if(pgn == 0) { pgn = pgnDefault; useDefault = 1; }
+  if(label == "gameScore") { pgnDefault = pgn; useDefault = 0; }
 
   // 1. Load a PGN into the game
   game[label] = new Chess(); 
@@ -55,10 +56,15 @@ function runGame(pgn,end,label,startply,caption) {
   game[label].reset();
 
   // Pre-cache the FEN for each position in the game
-  fen[label] = new Array()
-  for(counter = 0; counter <= moves[label].length; counter++) {
-    fen[label][counter] = game[label].fen();
-    game[label].move(moves[label][counter]);
+  if(useDefault != 1) {
+    fen[label] = new Array()
+    for(counter = 0; counter <= moves[label].length; counter++) {
+      fen[label][counter] = game[label].fen();
+      game[label].move(moves[label][counter]);
+    }
+  } else {
+    // No need to calculate each and every FEN if we have already done so
+    fen[label] = fen["gameScore"];
   }
  
   board[label] = ChessBoard(label, {
