@@ -145,9 +145,11 @@ function setGameMoveText(label) {
 function HTMLstringForGame(label,width) {
   var out = '';
   var widthstring = width + 'px';
+  var newlinemaybe = '';
   if((window.innerWidth > 0 && window.innerWidth < width + 5) ||
      screen.width < width + 5) {
     widthstring = '100%';
+    newlinemaybe = '<br>';
   }
   out += '<div class="chessboard" id="' + label + 
              '" style="margin: 0 auto; width: ' + widthstring + ';"></div> ';
@@ -160,8 +162,11 @@ function HTMLstringForGame(label,width) {
       + "'" + label + "'" + ',-3)" value=">" style="width: 61px;" /> ';
   out += '<input type="button" onclick="chessMove(' + 
          "'" + label + "'" + ',-4)" value=">>" /> ';
+  out += newlinemaybe;
   out += '<span id="' + label + '-move" ';
-  out += 'style="margin-left:5.5px;position: absolute; overflow: visible;';
+  if(newlinemaybe == '') {
+    out += 'style="margin-left:5.5px;position: absolute; overflow: visible;';
+  }
   out += '"></span> ';
   out += '<p><span id="' + label + '-text"></span></p>';
   out += '</div>'
@@ -173,9 +178,11 @@ function HTMLstringForGame(label,width) {
 function HTMLstringForPostition(label,width,ply) {
   var out = '';
   var widthstring = width + 'px';
+  var newlinemaybe = '';
   if((window.innerWidth > 0 && window.innerWidth < width + 5) ||
      screen.width < width + 5) {
     widthstring = '100%';
+    newlinemaybe = '<br>';
   }
   out += '<div class="chessboard" id="' + label + 
              '" style="margin: 0 auto; width: ' + widthstring + ';"></div> ';
@@ -186,8 +193,11 @@ function HTMLstringForPostition(label,width,ply) {
       + "'" + label + "'" + ',' + ply + ')" value=" Reset " /> ';
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-5)" value=">" /> ';
+  out += newlinemaybe;
   out += '<span id="' + label + '-move" ';
-  out += 'style="margin-left:5.5px;position: absolute; overflow: visible;';
+  if(newlinemaybe == '') {
+    out += 'style="margin-left:5.5px;position: absolute; overflow: visible;';
+  }
   out += '"></span> ';
   out += '<p><span id="' + label + '-text"></span></p>';
   out += '</div>'
