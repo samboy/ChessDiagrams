@@ -160,7 +160,9 @@ function HTMLstringForGame(label,width) {
       + "'" + label + "'" + ',-3)" value=">" style="width: 61px;" /> ';
   out += '<input type="button" onclick="chessMove(' + 
          "'" + label + "'" + ',-4)" value=">>" /> ';
-  out += '<span id="' + label + '-move"></span> ';
+  out += '<span id="' + label + '-move" ';
+  out += 'style="margin-left:5.5px;position: absolute; overflow: visible;';
+  out += '"></span> ';
   out += '<p><span id="' + label + '-text"></span></p>';
   out += '</div>'
   return out;
@@ -184,7 +186,9 @@ function HTMLstringForPostition(label,width,ply) {
       + "'" + label + "'" + ',' + ply + ')" value=" Reset " /> ';
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-5)" value=">" /> ';
-  out += '<span id="' + label + '-move"></span> ';
+  out += '<span id="' + label + '-move" ';
+  out += 'style="margin-left:5.5px;position: absolute; overflow: visible;';
+  out += '"></span> ';
   out += '<p><span id="' + label + '-text"></span></p>';
   out += '</div>'
   return out;
