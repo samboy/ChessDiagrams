@@ -2,7 +2,7 @@
 
 Interactive chess diagrams on a web page.
 
-The code in question is geared for a static HTML blog I gave, in 
+The code in question is geared for a static HTML blog I have, in 
 order to have annotated chess games with interactive diagrams.
 
 The diagrams allow one to go backwards and forwards in a game, to see
@@ -10,12 +10,12 @@ how a position develops move by move.
 
 # Functional example
 
-The file `index.html` has a functional example of a web page using
+The file `exampleChess.html` has a functional example of a web page using
 the chess diagrams.  Notes are in the HTML comments.
 
 # How to use
 
-* Install all of the files in this directory (except `index.html`)
+* Install all of the files in this directory (except `exampleChess.html`)
   in the same location as a static HTML file which needs a chess 
   diagram added
 
