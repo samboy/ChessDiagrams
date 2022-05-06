@@ -144,9 +144,14 @@ function setGameMoveText(label) {
 // Create the HTML for holding the chess diagram (entire game)
 function HTMLstringForGame(label,width) {
   var out = '';
+  var widthstring = width + 'px';
+  if((window.innerWidth > 0 && window.innerWidth < width + 5) ||
+     screen.width < width + 5) {
+    widthstring = '100%';
+  }
   out += '<div class="chessboard" id="' + label + 
-             '" style="margin: 0 auto; width: ' + width + 'px;"></div> ';
-  out += '<div style="margin: 5px auto; width: ' + width + 'px;"> ';
+             '" style="margin: 0 auto; width: ' + widthstring + ';"></div> ';
+  out += '<div style="margin: 5px auto; width: ' + widthstring + ';"> ';
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-1)" value="<<" /> ';
   out += '<input type="button" onclick="chessMove('
@@ -165,9 +170,14 @@ function HTMLstringForGame(label,width) {
 // start of game)
 function HTMLstringForPostition(label,width,ply) {
   var out = '';
+  var widthstring = width + 'px';
+  if((window.innerWidth > 0 && window.innerWidth < width + 5) ||
+     screen.width < width + 5) {
+    widthstring = '100%';
+  }
   out += '<div class="chessboard" id="' + label + 
-             '" style="margin: 0 auto; width: ' + width + 'px;"></div> ';
-  out += '<div style="margin: 5px auto; width: ' + width + 'px;"> ';
+             '" style="margin: 0 auto; width: ' + widthstring + ';"></div> ';
+  out += '<div style="margin: 5px auto; width: ' + widthstring + ';"> ';
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-6)" value="<" /> ';
   out += '<input type="button" onclick="chessMove('
