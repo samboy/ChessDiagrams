@@ -93,3 +93,39 @@ is not 0, the buttons below the game will change to make it easier to
 go back to the position the diagram originally illustrates.
 
 The fifth argument is the text to put below the chess board.
+
+# Moving the files
+
+With some web pages, it may be better to have the dependencies (Javascript
+files, images, etc.) to be in another directory.
+
+This can be done:
+
+* Move the paths to all of the required `.js` and `.css` files
+* Edit `chessgame.js` to have `pieceTheme` point to where the piece
+  images are.
+
+For example, if we have all the files in `/chessfiles` on the web
+server, here is how the include looks:
+
+```
+<script src="/chessfiles/jquery-3.4.1.min.js"></script>
+<script src="/chessfiles/chessboard-0.3.0.min.js"
+  type="text/javascript"></script>
+<script src="/chessfiles/chess.js"></script>
+<link href="/chessfiles/chessboard-0.3.0.min.css" rel="stylesheet"></link>
+<script src="/chessfiles/chessgame.js"></script>
+```
+
+And here is how the relevant code in `chessgame.js` needs to look:
+
+```
+  board[label] = ChessBoard(label, {
+    // Make this the path to the pieces, e.g.
+    pieceTheme: '/chessfiles/{piece}.png',
+    // pieceTheme: '{piece}.png',
+    position: fen[label][ply[label]]
+  });
+```
+
+Absolute paths are best.  
