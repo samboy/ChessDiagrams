@@ -22,7 +22,24 @@ var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
     "35. Qb2+ Kd1 36. Bf1 Rd2 37. Rd7 Rxd7 38. Bxc4 bxc4 39. Qxh8 " +
     "Rd3 40. Qa8 c3 41. Qa4+ Ke1 42. f4 f5 43. Kc1 Rd2 44. Qa7 1-0";
 
-function runGame(pgn,end,label,startply,caption) {
+// Input:
+// pgn: The PGN (moves played) in the chess game
+// end: How the game ended, as a short string to be read by humans, e.g.
+//      "1-0", "Black resigned", "Stalemate (draw)", 
+//      "White checkmates Black", etc.
+// label: The ID for the board which contains this chess game
+// startply: At which ply do we display the position. 0 is game start,
+//      1 is after White's first move, 2 is after Black's first move,
+//      3 is after White's second move, and so on
+// caption: The caption to put below the game.  If 0, the PGN becomes the
+//      text displayed
+// myfen: Not currently used, will be used to either have the FEN for the 
+//      starting position (then we will use the PGN to determine subsequent
+//      positions in the game) or be an array with the FEN for each position
+//      (if so, the PGN will only be used for the default caption). If 0, 
+//      the starting position is the standard RNBQKBNR (#518 in Chess960)
+//      setup and we use the PGN to determine the FEN for each position.
+function runGame(pgn,end,label,startply,caption,myfen) {
   if(startply == 0) {
     document.getElementById(label +  "-box").innerHTML = 
         HTMLstringForGame(label,398);
