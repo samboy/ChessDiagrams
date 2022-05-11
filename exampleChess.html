@@ -28,11 +28,12 @@ Hello world, let me show you a chess game I played in 1994:
   --    after White’s first move, 2 is after Black’s first move, etc.
   -- 5) The text to put below the diagram.  If this has the value 0, we
   --    put in the PGN of the game score.
+  -- 6) myfen, currently unused.  Set to 0.
   -->
 <script type="text/javascript">
 runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
     + " 7. Qxg6+ Ke7 8. Qxe4 Kd6 9. Qd4 Kc6 10. Qc4 Kb6 11. Qb5# 1-0 ",
-    "White checkmates Black","gameScore",0,0);
+    "White checkmates Black","gameScore",0,0,0);
 </script>
 <noscript>
 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6
@@ -60,7 +61,7 @@ runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
   -- "backward", and "forward" instead of 
   -- "start", "backward", "forward", "end" -->
 <script type="text/javascript">
-runGame(0,"White checkmates Black","board1",6,"Position after 3... Nxe4?!");
+runGame(0,"White checkmates Black","board1",6,"Position after 3... Nxe4?!",0);
 </script>
 <noscript>
 Position after 3... Nxe4?!

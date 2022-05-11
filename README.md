@@ -40,7 +40,7 @@ the chess diagrams.  Notes are in the HTML comments.
 <script type="text/javascript">
 runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
     + " 7. Qxg6+ Ke7 8. Qxe4 Kd6 9. Qd4 Kc6 10. Qc4 Kb6 11. Qb5# 1-0 ",
-    "White checkmates Black","gameScore",0,0);
+    "White checkmates Black","gameScore",0,0,0);
 </script>
 <noscript>
 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6
@@ -53,7 +53,8 @@ The first argument to `runGame` is the PGN score of the game.  The
 second argument is how the game ended ("White resigned", "Black resigned",
 "Time ran out", "White checkmates Black", "Black chesmates White", "Draw",
 etc.).  The third argument, for the first diagram, should be `gameScore`.
-The fourth and fifth arguments are detailed below.
+The fourth and fifth arguments are detailed below.  The sixth argument is
+currently unused and should be set to 0.
 
 * For a subsequent diagram looking at a position in the above game,
   have something like this:
@@ -61,7 +62,7 @@ The fourth and fifth arguments are detailed below.
 ```
 <div id="board1-box"></div>
 <script type="text/javascript">
-runGame(0,"White checkmates Black","board1",6,"Position after 3... Nxe4?!");
+runGame(0,"White checkmates Black","board1",6,"Position after 3... Nxe4?!",0);
 </script>
 <noscript>
 Position after 3... Nxe4?!
