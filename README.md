@@ -134,7 +134,7 @@ Absolute paths are best.
 # Printing CSS
 
 For chess boards to look good when printing a web page, the following
-CSS can be put in the printing CSS for a web page
+CSS can be put in the printing CSS:
 
 ```
 /* Chess board squares colors */
