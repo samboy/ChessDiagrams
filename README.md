@@ -157,3 +157,8 @@ CSS can be put in the printing CSS:
 The `color-adjust` is needed so that the black squares keep their color
 when printing the page.
 
+Note that while the diagrams are generally compatible with Internet Explorer
+9 and above, since Internet Explorer never got `color-adjust` support, 
+the chess diagrams will lost their checkerboard when printed.  The
+solution is to use a modern standards-compliant browser when printing
+pages with these chess diagrams.
