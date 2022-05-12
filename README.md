@@ -130,3 +130,30 @@ And here is how the relevant code in `chessgame.js` needs to look:
 ```
 
 Absolute paths are best.  
+
+# Printing CSS
+
+For chess boards to look good when printing a web page, the following
+CSS can be put in the printing CSS for a web page
+
+```
+/* Chess board squares colors */
+.black-3c85d {
+        color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+        background-color: #ccc !important;
+        color: #444 !important;
+}
+.white-1e1d7 {
+        background-color: #fff !important;
+        color: #444 !important;
+}
+/* Chess board stays on one page when printed */
+.chessboard-63f37 {
+        page-break-inside:avoid;
+}
+```
+
+The `color-adjust` is needed so that the black squares keep their color
+when printing the page.
+
