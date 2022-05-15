@@ -33,10 +33,17 @@ var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
 //      3 is after White's second move, and so on
 // caption: The caption to put below the game.  If 0, the PGN becomes the
 //      text displayed
-// myfen: Not currently used, will be used to either have the FEN for the 
+// myfen: This will eventually be used for the 
 //      starting position (then we will use the PGN to determine subsequent
-//      positions in the game) or be an array with the FEN for each position
-//      (if so, the PGN will only be used for the default caption). If 0, 
+//      positions in the game) if a string.  That's not implemented.
+//      However, if myfen is an array with the FEN for each position,
+//      we will use this array of FEN positions to determine the position
+//      after each move.  Doing this way is a good deal faster than
+//      calculating each FEN from the PGN game score, so it is useful
+//      for really long games like the 136-move long Carlsen versus 
+//      Nepomniachtchi, World Chess Championship 2021, Game 6. Note 
+//      that the FEN array overrides the game PGN; if in use, the PGN will 
+//      only be used for the default caption). If myfen is 0, 
 //      the starting position is the standard RNBQKBNR (#518 in Chess960)
 //      setup and we use the PGN to determine the FEN for each position.
 function runGame(pgn,end,label,startply,caption,myfen) {
@@ -59,29 +66,42 @@ function runGame(pgn,end,label,startply,caption,myfen) {
   // that this doesn’t make showing analysis positions which didn’t occur
   // in the game easier, but, IMHO, diagrams should usually be of 
   // positions which actually were on the board in the game.
-  if(pgn == 0) { pgn = pgnDefault; useDefault = 1; }
+  if(pgn == 0 && myfen == 0) { pgn = pgnDefault; useDefault = 1; }
   if(label == "gameScore") { pgnDefault = pgn; useDefault = 0; }
 
-  // 1. Load a PGN into the game
-  game[label] = new Chess(); 
-  game[label].load_pgn(pgn);
-  var localhistory = game[label].history();
-  moves[label] = new Array();
-  for(counter = 0; counter < localhistory.length; counter++) { 
-    moves[label][counter] = localhistory[counter];
-  }
-  game[label].reset();
+  // By using Array.isArray(), this code requires I use a browser which
+  // came out in 2011 or later (IE9 was 2011-03-13, Firefox 4 was 2011-04-21,
+  // Chrome 5 was 2010-05-24, Safari 5 was 2010-06-06, and Opera 11.5
+  // was 2011-06-27)
 
-  // Pre-cache the FEN for each position in the game
-  if(useDefault != 1) {
-    fen[label] = new Array()
-    for(counter = 0; counter <= moves[label].length; counter++) {
-      fen[label][counter] = game[label].fen();
-      game[label].move(moves[label][counter]);
+  // If myfen is an array, that means the FEN has already been calculated
+  // move by move.  For really long games like Carlsen versus Nepomniachtchi, 
+  // World Chess Championship 2021, Game 6 (136 moves!), this speeds up
+  // the loading of games *a lot*
+  if(!Array.isArray(myfen)) { 
+    // 1. Load a PGN into the game
+    game[label] = new Chess(); 
+    game[label].load_pgn(pgn);
+    var localhistory = game[label].history();
+    moves[label] = new Array();
+    for(counter = 0; counter < localhistory.length; counter++) { 
+      moves[label][counter] = localhistory[counter];
     }
-  } else {
+    game[label].reset();
+
+    // Pre-cache the FEN for each position in the game
+    if(useDefault != 1) {
+      fen[label] = new Array()
+      for(counter = 0; counter <= moves[label].length; counter++) {
+        fen[label][counter] = game[label].fen();
+        game[label].move(moves[label][counter]);
+      }
+    } else {
     // No need to calculate each and every FEN if we have already done so
-    fen[label] = fen["gameScore"];
+      fen[label] = fen["gameScore"];
+    }
+  } else { // Array.isArray(myfen)
+    fen[label] = myfen;
   }
  
   board[label] = ChessBoard(label, {
