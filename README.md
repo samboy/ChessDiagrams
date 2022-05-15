@@ -40,7 +40,7 @@ the chess diagrams.  Notes are in the HTML comments.
 <script type="text/javascript">
 runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
     + " 7. Qxg6+ Ke7 8. Qxe4 Kd6 9. Qd4 Kc6 10. Qc4 Kb6 11. Qb5# 1-0 ",
-    "White checkmates Black","gameScore",0,0,0);
+    "White checkmates Black","gameScore",0,0,0,0);
 </script>
 <noscript>
 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6
@@ -62,7 +62,8 @@ currently unused and should be set to 0.
 ```
 <div id="board1-box"></div>
 <script type="text/javascript">
-runGame(0,"White checkmates Black","board1",6,"Position after 3... Nxe4?!",0);
+runGame(0,"White checkmates Black","board1",6,"Position after 3... Nxe4?!",
+        0,0);
 </script>
 <noscript>
 Position after 3... Nxe4?!
@@ -94,6 +95,15 @@ is not 0, the buttons below the game will change to make it easier to
 go back to the position the diagram originally illustrates.
 
 The fifth argument is the text to put below the chess board.
+
+The sixth argument is the FEN for either the starting position (a string), 
+or for each and every position in a game (an array).  This can be used 
+for analysis positions, endgame studies, loading long games faster (we 
+save time with long games not processing a PGN string), chess variants, 
+etc.
+
+The seventh argument is the string to show at the first position in
+the diagram.  It defaults to "Game start".
 
 # Moving the files
 
@@ -176,7 +186,5 @@ The `myfen` parameter also allows illegal moves in games, such as using
 this duagram code for Makruk, Shatranj, or any other chess variant which
 uses the same 8x8 board and pieces as standard Chess.
 
-An example of `myfen` in use can be seen in the file 
-`myfen-CarlsenNepo2021Game6.html`.
-
+Examples of `myfen` in use can be seen in the file `myfen.html`.
 

@@ -6,6 +6,7 @@ var ply = {};
 var board = {};
 var game = {};
 var endtext = {};
+var starttext = {};
 var moves = {};
 var note = {};
 var defaultply = {};
@@ -47,7 +48,9 @@ var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
 //      only be used for the default caption). If myfen is 0, 
 //      the starting position is the standard RNBQKBNR (#518 in Chess960)
 //      setup and we use the PGN to determine the FEN for each position.
-function runGame(pgn,end,label,startply,caption,myfen) {
+// startmsg: The message used to describe the start of the sequence of
+//      moves shown in the diagram.  Defaults to "Game start"
+function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
   if(startply == 0) {
     document.getElementById(label +  "-box").innerHTML = 
         HTMLstringForGame(label,398);
@@ -93,7 +96,11 @@ function runGame(pgn,end,label,startply,caption,myfen) {
     for(counter = 0; counter < localhistory.length; counter++) { 
       moves[label][counter] = localhistory[counter];
     }
-    game[label].reset();
+    if(typeof(myfen) == "string") { 
+      game[label].load(myfen); 
+    } else {
+      game[label].reset(); // Load Standard (518) chess position
+    }
 
     // Pre-cache the FEN for each position in the game
     if(useDefault != 1) {
