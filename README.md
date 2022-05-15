@@ -183,7 +183,7 @@ to load if the Javascript needs to convert the PGN file in to a series
 of FEN postitions.
 
 The `myfen` parameter also allows illegal moves in games, such as using
-this duagram code for Makruk, Shatranj, or any other chess variant which
+this diagram code for Makruk, Shatranj, or any other chess variant which
 uses the same 8x8 board and pieces as standard Chess.
 
 Examples of `myfen` in use can be seen in the file `myfen.html`.
