@@ -162,3 +162,21 @@ Note that while the diagrams are generally compatible with Internet Explorer
 the chess diagrams will lost their checkerboard when printed.  The
 solution is to use a modern standards-compliant browser when printing
 pages with these chess diagrams.
+
+# Using myfen 
+
+The `myfen` parameter is useful when having a long chess game, such as the
+136-move long Carlsen versus Nepomniachtchi, World Chess Championship 2021
+game.  By using `myfen`, a long game like this loads almost instantly,
+even on an older smart phone, instead of taking as long as a few seconds
+to load if the Javascript needs to convert the PGN file in to a series
+of FEN postitions.
+
+The `myfen` parameter also allows illegal moves in games, such as using
+this duagram code for Makruk, Shatranj, or any other chess variant which
+uses the same 8x8 board and pieces as standard Chess.
+
+An example of `myfen` in use can be seen in the file 
+`myfen-CarlsenNepo2021Game6.html`.
+
+
