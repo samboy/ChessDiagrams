@@ -80,8 +80,13 @@ function runGame(pgn,end,label,startply,caption,myfen) {
   // World Chess Championship 2021, Game 6 (136 moves!), this speeds up
   // the loading of games *a lot*
   if(!Array.isArray(myfen)) { 
+    // Initialize the board
+    if(typeof(myfen) == "string") { 
+      game[label] = new Chess(myfen); 
+    } else {
+      game[label] = new Chess(); // Standard (518) starting position
+    }
     // 1. Load a PGN into the game
-    game[label] = new Chess(); 
     game[label].load_pgn(pgn);
     var localhistory = game[label].history();
     moves[label] = new Array();
