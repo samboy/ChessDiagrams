@@ -169,9 +169,10 @@ when printing the page.
 
 Note that while the diagrams are generally compatible with Internet Explorer
 9 and above, since Internet Explorer never got `color-adjust` support, 
-the chess diagrams will lost their checkerboard when printed.  The
+the chess diagrams will lost their checkerboard when printed in IE.  The
 solution is to use a modern standards-compliant browser when printing
-pages with these chess diagrams.
+pages with these chess diagrams; all other browsers except IE (including
+Edge) support `color-adjust`.
 
 # Using myfen 
 
