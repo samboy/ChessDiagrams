@@ -1,6 +1,7 @@
 'use strict';
 /*
  * Copyright (c) 2015, Jeff Hlywa (jhlywa@gmail.com)
+ * Copyright (c) 2022, Sam Trenholme (https://samiam.org)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1400,7 +1401,7 @@ var Chess = function(fen) {
         header_string = '';
       }
 
-     reset();
+      // reset(); // Not needed
 
       /* parse PGN header */
       var headers = parse_pgn_header(header_string, options);
