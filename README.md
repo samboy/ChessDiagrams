@@ -53,8 +53,7 @@ The first argument to `runGame` is the PGN score of the game.  The
 second argument is how the game ended ("White resigned", "Black resigned",
 "Time ran out", "White checkmates Black", "Black chesmates White", "Draw",
 etc.).  The third argument, for the first diagram, should be `gameScore`.
-The fourth and fifth arguments are detailed below.  The sixth argument is
-currently unused and should be set to 0.
+The subsequent arguments (4-7) are detailed below.  
 
 * For a subsequent diagram looking at a position in the above game,
   have something like this:
