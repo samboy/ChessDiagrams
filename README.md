@@ -93,7 +93,8 @@ Black’s first move, 3 is after White’s second move, and so on.  If this
 is not 0, the buttons below the game will change to make it easier to
 go back to the position the diagram originally illustrates.
 
-The fifth argument is the text to put below the chess board.
+The fifth argument is the text to put below the chess board.  It
+defaults to the PGN for the game in question.
 
 The sixth argument is the FEN for either the starting position (a string), 
 or for each and every position in a game (an array).  This can be used 
