@@ -10,8 +10,9 @@ how a position develops move by move.
 
 # Functional example
 
-The file `exampleChess.html` has a functional example of a web page using
-the chess diagrams.  Notes are in the HTML comments.
+The file [exampleChess.html](https://samboy.github.io/ChessDiagrams/exampleChess.html) has 
+a functional example of a web page using the chess diagrams.  
+Notes are in the HTML comments.
 
 # How to use
 
@@ -187,7 +188,7 @@ The `myfen` parameter also allows illegal moves in games, such as using
 this diagram code for Makruk, Shatranj, or any other chess variant which
 uses the same 8x8 board and pieces as standard Chess.
 
-Examples of `myfen` in use can be seen in the file `myfen.html`.
+Examples of `myfen` in use can be seen in the file [myfen.html](https://samboy.github.io/ChessDiagrams/myfen.html).
 
 # Notes
 
