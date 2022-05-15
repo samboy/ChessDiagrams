@@ -10,6 +10,7 @@ var moves = {};
 var note = {};
 var defaultply = {};
 var fen = {}
+var gamelength = {};
 
 // Default PGN is Kasparov-Topalov January 1999
 var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
@@ -92,16 +93,19 @@ function runGame(pgn,end,label,startply,caption,myfen) {
     // Pre-cache the FEN for each position in the game
     if(useDefault != 1) {
       fen[label] = new Array()
-      for(counter = 0; counter <= moves[label].length; counter++) {
+      gamelength[label] = moves[label].length;
+      for(counter = 0; counter <= gamelength[label]; counter++) {
         fen[label][counter] = game[label].fen();
         game[label].move(moves[label][counter]);
       }
     } else {
     // No need to calculate each and every FEN if we have already done so
       fen[label] = fen["gameScore"];
+      gamelength[label] = gamelength["gameScore"];
     }
   } else { // Array.isArray(myfen)
     fen[label] = myfen;
+    gamelength[label] = myfen.length - 1;
   }
  
   board[label] = ChessBoard(label, {
@@ -135,13 +139,13 @@ function chessMove(label,action) {
     } else if(action == -2 || action == -6) {
       ply[label] -= 1;
     } else if(action == -4) {
-      ply[label] = moves[label].length;
+      ply[label] = gamelength[label];
     } else if(action >= 0) {
       ply[label] = action;
     }
 
-    if (ply[label] > moves[label].length) {
-      ply[label] = moves[label].length;
+    if (ply[label] > gamelength[label]) {
+      ply[label] = gamelength[label];
     } else if(ply[label] < 0) {
       ply[label] = 0;
     }
@@ -168,7 +172,7 @@ function setGameMoveText(label) {
     } else {
       color = " (White moved)";
     }
-    if(ply[label] >= moves[label].length) {
+    if(ply[label] >= gamelength[label]) {
       document.getElementById(label + "-move").innerHTML = endtext[label];
     } else if(ply[label] == 0) {
       document.getElementById(label + "-move").innerHTML = "Game start";
