@@ -7,6 +7,7 @@ var board = {};
 var game = {};
 var endtext = {};
 var starttext = {};
+var startmovenumber = {};
 var moves = {};
 var note = {};
 var defaultply = {};
@@ -66,6 +67,7 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
   } else {
     starttext[label] = startmsg;
   }
+  startmovenumber[label] = 1;
   var counter = 0;
   var useDefault = 0;
 
@@ -81,7 +83,8 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
   // By using Array.isArray(), this code requires I use a browser which
   // came out in 2011 or later (IE9 was 2011-03-13, Firefox 4 was 2011-04-21,
   // Chrome 5 was 2010-05-24, Safari 5 was 2010-06-06, and Opera 11.5
-  // was 2011-06-27)
+  // was 2011-06-27).  This code is compatible with IE9 for everything
+  // except printing (IE never got `color-adjust`)
 
   // If myfen is an array, that means the FEN has already been calculated
   // move by move.  For really long games like Carlsen versus Nepomniachtchi, 
@@ -90,6 +93,11 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
   if(!Array.isArray(myfen)) { 
     // Initialize the board
     if(typeof(myfen) == "string") { 
+      var fields;
+      fields = myfen.split(/\s+/);
+      if(fields.length >= 6) {
+        startmovenumber[label] = parseInt(fields[5]);
+      } 
       game[label] = new Chess(myfen); 
     } else {
       game[label] = new Chess(); // Standard (518) starting position
@@ -195,7 +203,7 @@ function setGameMoveText(label) {
       document.getElementById(label + "-move").innerHTML = starttext[label];
     } else {
       document.getElementById(label + "-move").innerHTML = "Move " +
-         Math.floor((ply[label]+1)/2) + color;
+         (Math.floor((ply[label]+1)/2) - 1 + startmovenumber[label]) + color;
     } 
 } 
 
