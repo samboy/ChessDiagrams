@@ -188,3 +188,8 @@ uses the same 8x8 board and pieces as standard Chess.
 
 Examples of `myfen` in use can be seen in the file `myfen.html`.
 
+# Notes
+
+The underlying code does not use Chess960 rules for castling; only
+standard castling is supported.
+
