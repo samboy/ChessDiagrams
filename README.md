@@ -4,6 +4,8 @@ Interactive chess diagrams on a web page.
 
 The code in question is geared for a static HTML blog I have, in 
 order to have annotated chess games with interactive diagrams.
+The pages are campatible with modern browsers, most phones, and
+even work in Internet Explorer (9 or higher).
 
 The diagrams allow one to go backwards and forwards in a game, to see
 how a position develops move by move.
