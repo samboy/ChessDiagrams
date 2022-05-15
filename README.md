@@ -192,5 +192,7 @@ Examples of `myfen` in use can be seen in the file `myfen.html`.
 # Notes
 
 The underlying code does not use Chess960 rules for castling; only
-standard castling is supported.
+standard castling is supported.  The workaround is to use the myfen
+parameter with an array when showing Chess960 games where castling was 
+used.
 
