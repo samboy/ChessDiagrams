@@ -61,6 +61,11 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
   ply[label] = startply;
   defaultply[label] = startply;
   endtext[label] = end;
+  if(startmsg == 0) {
+    starttext[label] = "Game start";
+  } else {
+    starttext[label] = startmsg;
+  }
   var counter = 0;
   var useDefault = 0;
 
@@ -187,7 +192,7 @@ function setGameMoveText(label) {
     if(ply[label] >= gamelength[label]) {
       document.getElementById(label + "-move").innerHTML = endtext[label];
     } else if(ply[label] == 0) {
-      document.getElementById(label + "-move").innerHTML = "Game start";
+      document.getElementById(label + "-move").innerHTML = starttext[label];
     } else {
       document.getElementById(label + "-move").innerHTML = "Move " +
          Math.floor((ply[label]+1)/2) + color;
