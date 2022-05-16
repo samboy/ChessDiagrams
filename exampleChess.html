@@ -7,7 +7,7 @@ content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"
 
 <h1>Example chess game (Sam Trenholme vs. NN, 1994)</h1>
 
-Hello world, let me show you a chess game I played in 1994:
+Let me show you a chess game I played in 1994:
 
 <p>
 
@@ -29,7 +29,7 @@ Hello world, let me show you a chess game I played in 1994:
   --    where ID is this third argument
   -- 4) The ply number we are looking at in the diagram.  This allows us to
   --    make a diagram of a position in the game.  0 is game start, 1 is
-  --    after White’s first move, 2 is after Black’s first move, etc.
+  --    after White’s first move, 2 is after Black's first move, etc.
   -- 5) The text to put below the diagram.  If this has the value 0, we
   --    put in the PGN of the game score.
   -- 6) myfen.  See myfen.html for usage examples.
@@ -61,7 +61,7 @@ runGame("1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nxe4 4. Qe2 f6 5. Qh5 g6 6. Nxg6 hxg6 "
   -- Note that if gameScore is given 0 as its PGN value, or if another
   -- diagram uses 0 for the PGN without gameScore being set, the game 
   -- shown will be Kasparov - Topalov Wijk aan Zee 1999 
-  -- Also note: If ply (the fourth argument) isn’t 0, we change the
+  -- Also note: If ply (the fourth argument) isn't 0, we change the
   -- buttons to be "reset" (go back to the position initally shown), 
   -- "backward", and "forward" instead of 
   -- "start", "backward", "forward", "end" -->
@@ -86,7 +86,8 @@ Position after 3... Nxe4?!
 <h1>Browser compatibility</h1>
 
 <ul>
-<li>Internet Explorer 9 and higher.
+<li>Internet Explorer 9 and higher (printing doesn't work)
+<li>Opera 12.18 (printing doesn't work)
 <li>Firefox 52 or higher. Probably works with older versions; FF 52 is
     the last version to run in Windows XP.
 <li>Current versions of Edge and Chrome.
