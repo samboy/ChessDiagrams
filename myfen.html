@@ -2,6 +2,25 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"
 >
+<style>
+@media print {
+	/* Chess board squares colors */
+        .black-3c85d {
+                color-adjust: exact !important;
+                -webkit-print-color-adjust: exact !important;
+                background-color: #ccc !important;
+                color: #444 !important;
+        }
+        .white-1e1d7 {
+                background-color: #fff !important;
+                color: #444 !important;
+        }
+        /* Chess board stays on one page when printed */
+        .chessboard-63f37 {
+                page-break-inside:avoid;
+        }
+}
+</style>
 </head>
 <body>
 
