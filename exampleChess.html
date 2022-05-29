@@ -42,7 +42,10 @@ Let me show you a chess game I played in 1994:
 <div id="gameScore-box"></div>
 <!-- Here, runGame draws the interactive diagram.  It takes the following
   -- arguments: 
-  -- 1) The PGN of the game we want to go over
+  -- 1) The PGN of the game we want to go over.  If this is 0, use the
+  --    PGN of the game "gameScore".  If this is a string which starts
+  --    with the letters "board" (e.g. "board1"), use the score of the
+  --    game with the same ID as this PGN for the score of this game.
   -- 2) The string describing the end of the game
   -- 3) The ID of the game.  Note that we need a <div id="ID-box"></div>,
   --    where ID is this third argument

@@ -70,6 +70,7 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
   startmovenumber[label] = 1;
   var counter = 0;
   var useDefault = 0;
+  var useLabel = "gameScore"; // Label to use if copy of another game
 
   // Since we may use the same PGN multiple times when annotating a
   // game, let’s allow pgn to be a copy of "gameScore".  This way,
@@ -79,6 +80,7 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
   // positions which actually were on the board in the game.
   if(pgn == 0 && myfen == 0) { pgn = pgnDefault; useDefault = 1; }
   if(label == "gameScore") { pgnDefault = pgn; useDefault = 0; }
+  if(pgn.match(/^board/)) { useDefault = 1; useLabel = pgn; pgn = 0; }
 
   // By using Array.isArray(), this code requires I use a browser which
   // came out in 2011 or later (IE9 was 2011-03-13, Firefox 4 was 2011-04-21,
@@ -102,17 +104,20 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
     } else {
       game[label] = new Chess(); // Standard (518) starting position
     }
-    // 1. Load a PGN into the game
-    game[label].load_pgn(pgn);
-    var localhistory = game[label].history();
-    moves[label] = new Array();
-    for(counter = 0; counter < localhistory.length; counter++) { 
-      moves[label][counter] = localhistory[counter];
-    }
-    if(typeof(myfen) == "string") { 
-      game[label].load(myfen); 
-    } else {
-      game[label].reset(); // Load Standard (518) chess position
+    // 1. Load a PGN into the game (if applicable, i.e. this isn't
+    //    a copy of an already loaded game)
+    if(pgn != 0) {
+      game[label].load_pgn(pgn);
+      var localhistory = game[label].history();
+      moves[label] = new Array();
+      for(counter = 0; counter < localhistory.length; counter++) { 
+        moves[label][counter] = localhistory[counter];
+      }
+      if(typeof(myfen) == "string") { 
+        game[label].load(myfen); 
+      } else {
+        game[label].reset(); // Load Standard (518) chess position
+      }
     }
 
     // Pre-cache the FEN for each position in the game
@@ -125,8 +130,8 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
       }
     } else {
     // No need to calculate each and every FEN if we have already done so
-      fen[label] = fen["gameScore"];
-      gamelength[label] = gamelength["gameScore"];
+      fen[label] = fen[useLabel];
+      gamelength[label] = gamelength[useLabel];
     }
   } else { // Array.isArray(myfen)
     fen[label] = myfen;
