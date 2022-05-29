@@ -215,7 +215,7 @@ This code does not perform AJAX queries so does not trigger this issue.
 The older version of jQuery is used so that Safari testing can be
 done without needing to have a Macintosh computer; the most recent
 version of Safari for Windows is Safari 5 which is *not* compatible
-with newer jQuery releases.  That said, it is believed this line
+with newer jQuery releases.  That said, testing shows that this line
 disables the insecure code:
 
 ```
