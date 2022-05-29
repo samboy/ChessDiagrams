@@ -178,6 +178,11 @@ solution is to use a modern standards-compliant browser when printing
 pages with these chess diagrams; all other browsers except IE (including
 Edge) support `color-adjust`.
 
+While on the subject of Internet Explorer, IE9 requires there to be
+a DOCTYPE header at the beginning of the HTML document for the chess
+diagrams to render correctly.  Internet Explorer 11 (IE11), however,
+will correctly render the diagrams without needing the DOCTYPE header.
+
 # Using myfen 
 
 The `myfen` parameter is useful when having a long chess game, such as the
