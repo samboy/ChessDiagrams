@@ -221,3 +221,5 @@ disables the insecure code:
 <script>$.ajaxSetup({contents: {script: false}})</script>
 ```
 
+Observe this line in all documentation and examples to minimize
+the chance of a security hazard.
