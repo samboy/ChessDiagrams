@@ -29,7 +29,8 @@ Notes are in the HTML comments.
   header or just above the first diagram:
 
 ```
-<script src="jquery-3.4.1.min.js"></script>
+<script src="jquery-1.12.4.min.js"></script>
+<script>$.ajaxSetup({contents: {script: false}})</script>
 <script src="chessboard-0.3.0.min.js"
   type="text/javascript"></script>
 <script src="chess.js"></script>
@@ -130,6 +131,7 @@ server, here is how the include looks:
 <script src="/chessfiles/chess.js"></script>
 <link href="/chessfiles/chessboard-0.3.0.min.css" rel="stylesheet"></link>
 <script src="/chessfiles/chessgame.js"></script>
+<script>$.ajaxSetup({contents: {script: false}})</script>
 ```
 
 And here is how the relevant code in `chessgame.js` needs to look:
@@ -204,4 +206,18 @@ The underlying code does not use Chess960 rules for castling; only
 standard castling is supported.  The workaround is to use the myfen
 parameter with an array when showing Chess960 games where castling was 
 used.
+
+The underlying jQuery library has security issues when used with
+[AJAX queries where the user can control the URL being 
+fetched](https://security.stackexchange.com/questions/205864/is-there-a-way-to-exploit-jquery-1-12-4-vulnerability).
+This code does not perform AJAX queries so does not trigger this issue.
+The older version of jQuery is used so that Safari testing can be
+done without needing to have a Macintosh computer; the most recent
+version of Safari for Windows is Safari 5 which is *not* compatible
+with newer jQuery releases.  That said, it is believed this line
+disables the insecure code:
+
+```
+<script>$.ajaxSetup({contents: {script: false}})</script>
+```
 
