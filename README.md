@@ -125,7 +125,8 @@ For example, if we have all the files in `/chessfiles` on the web
 server, here is how the include looks:
 
 ```
-<script src="/chessfiles/jquery-3.4.1.min.js"></script>
+<script src="jquery-1.12.4.min.js"></script>
+<script>$.ajaxSetup({contents: {script: false}})</script>
 <script src="/chessfiles/chessboard-0.3.0.min.js"
   type="text/javascript"></script>
 <script src="/chessfiles/chess.js"></script>
