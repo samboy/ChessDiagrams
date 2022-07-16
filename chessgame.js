@@ -212,7 +212,8 @@ function setGameMoveText(label) {
       document.getElementById(label + "-move").innerHTML = starttext[label];
     } else {
       document.getElementById(label + "-move").innerHTML = "Move " +
-         (Math.floor((ply[label]+1)/2) - 1 + startmovenumber[label]) + color;
+         (Math.floor((ply[label]+startcolor[label]+1)/2) - 1 + 
+          startmovenumber[label]) + color;
     } 
 } 
 
