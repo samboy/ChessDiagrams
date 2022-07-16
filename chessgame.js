@@ -8,6 +8,7 @@ var game = {};
 var endtext = {};
 var starttext = {};
 var startmovenumber = {};
+var startcolor = {};
 var moves = {};
 var note = {};
 var defaultply = {};
@@ -36,17 +37,16 @@ var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
 //      3 is after White's second move, and so on
 // caption: The caption to put below the game.  If 0, the PGN becomes the
 //      text displayed
-// myfen: This will eventually be used for the 
-//      starting position (then we will use the PGN to determine subsequent
-//      positions in the game) if a string.  That's not implemented.
-//      However, if myfen is an array with the FEN for each position,
-//      we will use this array of FEN positions to determine the position
+// myfen: This is used for the starting position (we use the PGN to 
+//      determine subsequent positions in the game) if a string.  
+//      If myfen is an array with the FEN for each position,
+//      we use this array of FEN positions to determine the position
 //      after each move.  Doing this way is a good deal faster than
 //      calculating each FEN from the PGN game score, so it is useful
 //      for really long games like the 136-move long Carlsen versus 
 //      Nepomniachtchi, World Chess Championship 2021, Game 6. Note 
 //      that the FEN array overrides the game PGN; if in use, the PGN will 
-//      only be used for the default caption). If myfen is 0, 
+//      only be used for the default caption. If myfen is 0, 
 //      the starting position is the standard RNBQKBNR (#518 in Chess960)
 //      setup and we use the PGN to determine the FEN for each position.
 // startmsg: The message used to describe the start of the sequence of
@@ -62,6 +62,7 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
   ply[label] = startply;
   defaultply[label] = startply;
   endtext[label] = end;
+  startcolor[label] = 0;
   if(startmsg == 0) {
     starttext[label] = "Game start";
   } else {
@@ -99,6 +100,9 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
       fields = myfen.split(/\s+/);
       if(fields.length >= 6) {
         startmovenumber[label] = parseInt(fields[5]);
+        if(fields[1] == "b") {
+          startcolor[label] = 1;
+        }
       } 
       game[label] = new Chess(myfen); 
     } else {
@@ -197,7 +201,7 @@ function chessMove(label,action) {
 // Set the text for the game move next to the buttons
 function setGameMoveText(label) {
     var color = "";
-    if(ply[label] % 2 == 0) {
+    if((ply[label] + startcolor[label]) % 2 == 0) {
       color = " (Black moved)";
     } else {
       color = " (White moved)";
