@@ -186,30 +186,24 @@ a DOCTYPE header at the beginning of the HTML document for the chess
 diagrams to render correctly.  Internet Explorer 11 (IE11), however,
 will correctly render the diagrams without needing the DOCTYPE header.
 
-# Dark Reader
+# Dark Mode
 
-Dark Reader will invert the colors of the chessboard so that white 
-squares are darker than black squares.  In order to preserve the colors
-of the sqaures in Dark Reader’s default mode, make sure the files
-`WhiteSquare.png` and `BlackSquare.png` are in an appropriate
-place, then add CSS like this to have the chessboard use these PNG
-images for the background:
+Modern browsers have support for dark mode.  Here is some CSS which
+will make the chessboard darker on dark mode screens:
 
 ```
-/* Dark reader: Don’t have white chessboard squares be darker than
-   black squares. */
-.black-3c85d {
-        background-image: url(BlackSquare.png);
-}
-.white-1e1d7 {
-        background-image: url(WhiteSquare.png);
+@media (prefers-color-scheme: dark) {
+        .black-3c85d {
+                background-image: none;
+                background-color: #49391c !important;
+        }
+        .white-1e1d7 {
+                background-image: none;
+                background-color: #a48f6e !important;
+                color: #000 !important;
+        }
 }
 ```
-
-Dark Reader users who feel having a dark chessboard more important 
-than having white squares be lighter on the chessboard may use Dark
-Reader’s “Filter” or “Filter+” modes (which will invert CSS images) 
-instead of the “Dynamic” mode.
 
 # Using myfen 
 
