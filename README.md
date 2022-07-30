@@ -158,7 +158,7 @@ CSS can be put in the printing CSS:
 .black-3c85d {
         color-adjust: exact !important;
         -webkit-print-color-adjust: exact !important;
-        background-color: #ccc !important;
+        background-color: #dbca9e !important;
         color: #444 !important;
 }
 .white-1e1d7 {
