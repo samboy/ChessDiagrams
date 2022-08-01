@@ -195,7 +195,7 @@ will make the chessboard darker on dark mode screens:
 @media (prefers-color-scheme: dark) {
         .black-3c85d {
                 background-image: none;
-                background-color: #6e5c3d !important;
+                background-color: #7c6949 !important;
         }
         .white-1e1d7 {
                 background-image: none;
