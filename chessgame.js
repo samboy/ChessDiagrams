@@ -40,7 +40,7 @@ function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
          iev = parseInt(ie);
     }
     if(iev > 10) {
-         window.setTimeout(runGameReal,1000,
+         window.setTimeout(runGameReal,50,
             pgn,end,label,startply,caption,myfen,startmsg);
     } else {
          runGameReal(pgn,end,label,startply,caption,myfen,startmsg);
