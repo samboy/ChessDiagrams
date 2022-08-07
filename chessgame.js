@@ -26,6 +26,27 @@ var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
     "35. Qb2+ Kd1 36. Bf1 Rd2 37. Rd7 Rxd7 38. Bxc4 bxc4 39. Qxh8 " +
     "Rd3 40. Qa8 c3 41. Qa4+ Ke1 42. f4 f5 43. Kc1 Rd2 44. Qa7 1-0";
 
+// Wrapper: We use window.setTimeout to not render the boards until the
+// page is rendered (Chrome annoyance workaround)
+function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
+    // Ancient IE check so scripts run in IE9 (2011)
+    var msie = navigator.userAgent.indexOf("MSIE");
+    var ie = "";
+    iev = 83;
+    if(msie && msie > 0) {
+         ie=navigator.userAgent.substr(msie + 5);
+         var iea = ie.indexOf(";");
+         ie = ie.substr(0,iea);
+         iev = parseInt(ie);
+    }
+    if(iev > 10) {
+         window.setTimeout(runGameReal,1000,
+            pgn,end,label,startply,caption,myfen,startmsg);
+    } else {
+         runGameReal(pgn,end,label,startply,caption,myfen,startmsg);
+    }
+}
+
 // Input:
 // pgn: The PGN (moves played) in the chess game
 // end: How the game ended, as a short string to be read by humans, e.g.
@@ -51,7 +72,7 @@ var pgnDefault = "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. f3 b5"+
 //      setup and we use the PGN to determine the FEN for each position.
 // startmsg: The message used to describe the start of the sequence of
 //      moves shown in the diagram.  Defaults to "Game start"
-function runGame(pgn,end,label,startply,caption,myfen,startmsg) {
+function runGameReal(pgn,end,label,startply,caption,myfen,startmsg) {
   if(startply == 0) {
     document.getElementById(label +  "-box").innerHTML = 
         HTMLstringForGame(label,398);
