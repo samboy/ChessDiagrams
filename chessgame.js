@@ -1,48 +1,5 @@
+/* Donated to the public domain 2022 by Sam Trenholme */
 // NOTE NOTE NOTE: If the piece graphics are moved, change pieceTheme below
-
-// This file `chessgame.js` is licensed under either of the following terms.
-// One may license these files under either the unlicense or the BSD0
-// license, or both.  No attribution is needed to use this file.
-//
-// # unlicense
-// 
-// Anyone is free to copy, modify, publish, use, compile, sell, or
-// distribute this software, either in source code form or as a compiled
-// binary, for any purpose, commercial or non-commercial, and by any
-// means.
-// 
-// In jurisdictions that recognize copyright laws, the author or authors
-// of this software dedicate any and all copyright interest in the
-// software to the public domain. We make this dedication for the benefit
-// of the public at large and to the detriment of our heirs and
-// successors. We intend this dedication to be an overt act of
-// relinquishment in perpetuity of all present and future rights to this
-// software under copyright law.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
-// 
-// For more information, please refer to <http://unlicense.org/>
-// 
-// # BSD0
-// 
-// Copyright (C) 2022 by Sam Trenholme
-// 
-// Permission to use, copy, modify, and/or distribute this software for
-// any purpose with or without fee is hereby granted.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 // All of these are objects because we have multiple board support
 var ply = {};
@@ -226,13 +183,14 @@ function runGameReal(pgn,end,label,startply,caption,myfen,startmsg) {
 // action: What to do.  -1: Top -2: Last move -3: Next move -4: End
 //         -5: Next move, note game is modified
 //         -6: Last move, note game is modified
+//	   -7: Fist move, note game is modified
 // Positive number: Go to that ply number (initial position is ply 0,
 // move 1 is ply 1 2, move 2 ply 3 4, etc.)
 function chessMove(label,action) {
     var counter = 0;
     if(action == -3 || action == -5) {
       ply[label] += 1;
-    } else if(action == -1) {
+    } else if(action == -1 || action == -7) {
       ply[label] = 0;
     } else if(action == -2 || action == -6) {
       ply[label] -= 1;
@@ -249,7 +207,7 @@ function chessMove(label,action) {
     }
 
     // Note if a mid-game position has been changed by pushing the buttons
-    if(action == -5 || action == -6 || action > 0) {
+    if(action == -5 || action == -6 || action == -7 || action > 0) {
       if(ply[label] != defaultply[label]) {
           document.getElementById(label +  "-text").innerHTML = 
               "Position modified, hit “Reset” to restore";
@@ -294,12 +252,16 @@ function HTMLstringForGame(label,width) {
   out += '<div class="chessboard" id="' + label + 
              '" style="margin: 0 auto; width: ' + widthstring + ';"></div> ';
   out += '<div style="margin: 5px auto; width: ' + widthstring + ';"> ';
+  // Start of game
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-1)" value="<<" /> ';
+  // Back one move
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-2)" value="<" /> ';
+  // Next move
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-3)" value=">" style="width: 61px;" /> ';
+  // End of game
   out += '<input type="button" onclick="chessMove(' + 
          "'" + label + "'" + ',-4)" value=">>" /> ';
   out += newlinemaybe;
@@ -327,10 +289,16 @@ function HTMLstringForPostition(label,width,ply) {
   out += '<div class="chessboard" id="' + label + 
              '" style="margin: 0 auto; width: ' + widthstring + ';"></div> ';
   out += '<div style="margin: 5px auto; width: ' + widthstring + ';"> ';
+  // Start of game
+  out += '<input type="button" onclick="chessMove('
+      + "'" + label + "'" + ',-7)" value="<<" /> ';
+  // Back one move
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-6)" value="<" /> ';
+  // Back to default diagram position
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',' + ply + ')" value=" Reset " /> ';
+  // Start of game
   out += '<input type="button" onclick="chessMove('
       + "'" + label + "'" + ',-5)" value=">" /> ';
   out += newlinemaybe;
